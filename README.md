@@ -1,28 +1,8 @@
-This is a Kotlin Multiplatform project targeting Desktop (JVM).
+This is a minimal reproducible example of a bug i encountered using compose navigation with KMM Compose.
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-    - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-    - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-      For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-      the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-      Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-      folder is the appropriate location.
+There are two classes. `AnotherClass` which just represents some random data.
+And `Destination` which is a sealed class to be used for navigation.
 
-### Build and Run Desktop (JVM) Application
+Inside `Destination` there is a static function called `of` which takes in `obj: Any` and returns a destination from a private map.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
-
----
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+When add a `NavHost` to the code the first entry in the map gets set to null for some reason. If i comment out the `NavHost` then the bug disappears.
